@@ -1,12 +1,10 @@
-import { defineConfig, loadEnv, ConfigEnv, UserConfig } from "vite";
+import { defineConfig, UserConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import eslintPlugin from "vite-plugin-eslint";
 
 // @see: https://vitejs.dev/config/
-export default defineConfig((mode: ConfigEnv): UserConfig => {
-	const env = loadEnv(mode.mode, process.cwd());
-
+export default defineConfig((): UserConfig => {
 	return {
 		// base: "/",
 		// alias config
@@ -32,16 +30,16 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
 			host: "0.0.0.0", // 服务器主机名，如果允许外部访问，可设置为"0.0.0.0"
 			port: 3000,
 			open: true,
-			cors: true
+			cors: true,
 			// https: false,
 			// 代理跨域（mock 不需要配置，这里只是个事列）
-			// proxy: {
-			// 	"/api": {
-			// 		target: "", // easymock
-			// 		changeOrigin: true,
-			// 		rewrite: path => path.replace(/^\/api/, "")
-			// 	}
-			// }
+			proxy: {
+				"/api": {
+					target: "", // easymock
+					changeOrigin: true,
+					rewrite: (path: any) => path.replace(/^\/api/, "")
+				}
+			}
 		},
 		// plugins
 		plugins: [
