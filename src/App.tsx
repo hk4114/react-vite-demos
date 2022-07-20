@@ -1,13 +1,38 @@
-import React from "react";
-import { Button } from "antd";
-import "antd/dist/antd.less";
-import "./App.less";
+import React, { FC } from "react";
+import { Router, Route, useHistory } from "@/components/Route";
 
-const App = () => {
+const Foo = () => <>foo</>;
+const Bar = () => <>bar</>;
+
+const Links = () => {
+	const history = useHistory();
+
+	const go = (path: string) => {
+		const state = { name: path };
+		history.push(path, state);
+	};
+
 	return (
-		<>
-			<Button type="primary">Button</Button>
-		</>
+		<div className="demo">
+			<button onClick={() => go("foo")}>foo</button>
+			<button onClick={() => go("bar")}>bar</button>
+		</div>
+	);
+};
+
+const App: FC = () => {
+	return (
+		<div>
+			<Router>
+				<Links />
+				<Route path="foo">
+					<Foo />
+				</Route>
+				<Route path="bar">
+					<Bar />
+				</Route>
+			</Router>
+		</div>
 	);
 };
 
